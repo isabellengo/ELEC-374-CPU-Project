@@ -23,64 +23,47 @@ module Bus(
 	input [31:0]BusMuxInZ, //Z is 64-bits, but we only have a 32-bit bus, will transfer half at a time
 
 	input [31:0]Mdatain,
+	input [31:0]MDR_Q,
 
-	input R0Out, R1Out, R2Out, R3Out, R4Out, R5Out, R6Out, R7Out, R8Out, R9Out, R10Out, R11Out, R12Out, R13Out, R14Out, R15Out,
+	input [31:0] C_sign_extended, BusMuxInPort, //added in phase 2 but just change buxmuxport if needed
+	input InPortout,
+
+	input [15:0] ROut,
 	input PCOut, HIOut, LOOut, ZOut,
-	input MDRout,
+	input MDRout, Cout,
 	
 	output wire [31:0] BusMuxOut
-  	/*
-	output wire [31:0]BusMuxOutR0,
-	output wire [31:0]BusMuxOutR1,
-	output wire [31:0]BusMuxOutR2,
-	output wire [31:0]BusMuxOutR3,
-	output wire [31:0]BusMuxOutR4,
-	output wire [31:0]BusMuxOutR5,
-	output wire [31:0]BusMuxOutR6,
-	output wire [31:0]BusMuxOutR7,
-	output wire [31:0]BusMuxOutR8,
-	output wire [31:0]BusMuxOutR9,
-	output wire [31:0]BusMuxOutR10,
-	output wire [31:0]BusMuxOutR11,
-	output wire [31:0]BusMuxOutR12,
-	output wire [31:0]BusMuxOutR13,
-	output wire [31:0]BusMuxOutR14,
-	output wire [31:0]BusMuxOutR15,
-
-	output wire [31:0]PC,
-	output wire [31:0]IR,
-	output wire [31:0]MAR,
-	output wire [31:0]HI,
-	output wire [31:0]LO,
-	output wire [31:0]Y,
-	output wire [31:0]B
-	*/
 );
 reg [31:0]q;
 
 always @(*) begin
-	if(R0Out) q = BusMuxInR0;
-	if(R1Out) q = BusMuxInR1;
-	if(R2Out) q = BusMuxInR2;
-	if(R3Out) q = BusMuxInR3;
-	if(R4Out) q = BusMuxInR4;
-	if(R5Out) q = BusMuxInR5;
-	if(R6Out) q = BusMuxInR6;
-	if(R7Out) q = BusMuxInR7;
-	if(R8Out) q = BusMuxInR8;
-	if(R9Out) q = BusMuxInR9;
-	if(R10Out) q = BusMuxInR10;
-	if(R11Out) q = BusMuxInR11;
-	if(R12Out) q = BusMuxInR12;
-	if(R13Out) q = BusMuxInR13;
-	if(R14Out) q = BusMuxInR14;
-	if(R15Out) q = BusMuxInR15;
+	q = 32'b0;
+
+	if(ROut[0]) q = BusMuxInR0;
+	if(ROut[1]) q = BusMuxInR1;
+	if(ROut[2]) q = BusMuxInR2;
+	if(ROut[3]) q = BusMuxInR3;
+	if(ROut[4]) q = BusMuxInR4;
+	if(ROut[5]) q = BusMuxInR5;
+	if(ROut[6]) q = BusMuxInR6;
+	if(ROut[7]) q = BusMuxInR7;
+	if(ROut[8]) q = BusMuxInR8;
+	if(ROut[9]) q = BusMuxInR9;
+	if(ROut[10]) q = BusMuxInR10;
+	if(ROut[11]) q = BusMuxInR11;
+	if(ROut[12]) q = BusMuxInR12;
+	if(ROut[13]) q = BusMuxInR13;
+	if(ROut[14]) q = BusMuxInR14;
+	if(ROut[15]) q = BusMuxInR15;
 
 	if(PCOut) q = BusMuxInPC;
-	//if(HIOut) q = BusMuxInHI;
-	//if(LOOut) q = BusMuxInLO;
+	if(HIOut) q = BusMuxHI;
+	if(LOOut) q = BusMuxLO;
 	if(ZOut) q = BusMuxInZ;
 	if(MDRout) q = Mdatain;
+	if(MDRout) q = MDR_Q;
+	if(Cout) q = C_sign_extended;
+	if(InPortout) q = BusMuxInPort;
 	end
 assign BusMuxOut = q;
 endmodule 

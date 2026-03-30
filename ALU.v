@@ -53,7 +53,7 @@ always @*
  
             SHRA: begin
                 C = 64'd0;
-                if(C[31] == 1) // if the number is negative, fill left bits with 1s
+                if(A[31] == 1) // if the number is negative, fill left bits with 1s
                     C[31:0] = (A >> B) | ~(32'hFFFF_FFFF >> B);
                 else
                     C[31:0] = $signed(A) >>> B;
@@ -76,7 +76,7 @@ always @*
  
             NEG: begin
                 C = 64'd0;
-                C[31:0] = ~A + 32'd1; //Two's complement
+                C[31:0] = (~A) + 32'd1; //Two's complement
             end
  
             NOT: begin
