@@ -61,8 +61,8 @@ Register OutPort(.clear(clear), .clock(Clock), .enable(OutPortin), .BusMuxOut(Bu
 
 wire [31:0] BusMuxInPort;
 
-Register InPort(.clear(clear), .clock(Clock), .enable(InPortout), .BusMuxOut(Input_Data), .BusMuxIn(BusMuxInPort)); // Input port register for phase 2
-
+Register InPort(.clear(clear), .clock(Clock), .enable(Strobe), .BusMuxOut(Input_Data), .BusMuxIn(BusMuxInPort)); // Input port register – Strobe latches external data
+ 
 wire [31:0] ALU_A;
 assign ALU_A = IncPC ? 32'd1 : AIn; // IncPC forces A=1 so ALU computes Bus+1 (PC+1)
 ALU ALU1(clear, Clock, controlSignal, ALU_A, BusMuxOut, COut);
